@@ -1,9 +1,13 @@
 <p align="center">
   <b>FishSpot - Encontre os melhores pontos de pesca do Brasil</b>
 </p>
+
+<img width="1918" height="950" alt="image" src="https://github.com/user-attachments/assets/6c3d660a-23e8-4542-b190-dba3bbd1394c" />
+
 <p align="center">
   App para pescadores que exibe no mapa os melhores pontos de pesca próximos, com listagem de peixes por região e época ideal para pescar. A comunidade confirma se o peixe está dando e posta relatos.
 </p>
+
 
 <div align="center">
   <img src="https://img.shields.io/badge/CI-GitHub_Actions-0A4174?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI" />
@@ -12,9 +16,12 @@
   <img src="https://img.shields.io/badge/Lint-ESLint_+_Stylelint-0A4174?style=for-the-badge&logo=eslint&logoColor=white" alt="Lint" />
 </div>
 
+
 <br>
 
 ## <img src="https://api.iconify.design/lucide/fish.svg?color=%230A4174" width="24" height="24" style="vertical-align: middle;"> Sobre o Projeto
+
+<img width="1919" height="945" alt="image" src="https://github.com/user-attachments/assets/062660a5-a74f-4320-aa04-c0189f964a56" />
 
 FishSpot é um app para pescadores que exibe no mapa os melhores pontos de pesca próximos ao usuário, com listagem de peixes por região e época ideal para pescar. A comunidade de usuários alimenta os dados confirmando se o peixe está dando em cada ponto e postando fotos.
 
