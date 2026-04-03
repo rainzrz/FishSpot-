@@ -11,7 +11,7 @@ jobs:
   # JOB 1 — Lint HTML
   # ─────────────────────────────────────────
   lint-html:
-    name: Lint HTML
+    name: Validar HTML
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,7 +33,7 @@ jobs:
   # JOB 2 — Lint CSS
   # ─────────────────────────────────────────
   lint-css:
-    name: Lint CSS
+    name: Validar CSS
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -55,7 +55,7 @@ jobs:
   # JOB 3 — Lint JS
   # ─────────────────────────────────────────
   lint-js:
-    name: Lint JavaScript
+    name: Validar JavaScript
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
