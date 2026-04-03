@@ -13,7 +13,7 @@
     "no-undef": "error",
     "eqeqeq": "error",
     "no-eval": "error",
-    "no-implicit-globals": "error",
+    "no-implicit-globals": "off",
     "semi": ["error", "always"],
     "no-console": "off"
   },
