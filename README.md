@@ -19,7 +19,7 @@
 FishSpot é um app para pescadores que exibe no mapa os melhores pontos de pesca próximos ao usuário, com listagem de peixes por região e época ideal para pescar. A comunidade de usuários alimenta os dados confirmando se o peixe está dando em cada ponto e postando fotos.
 
 - <img src="https://api.iconify.design/lucide/map-pin.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Mapa interativo:** Pontos de pesca em todo o Brasil com marcadores por status
-- <img src="https://api.iconify.design/lucide/filter.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Filtros:** Por tipo de ponto — Lagos, Rios, Açudes e Mar
+- <img src="https://api.iconify.design/lucide/filter.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Filtros:** Por tipo de ponto - Lagos, Rios, Açudes e Mar
 - <img src="https://api.iconify.design/lucide/users.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Comunidade:** Pescadores postam relatos e confirmam se o peixe está dando
 - <img src="https://api.iconify.design/lucide/search.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Busca:** Por nome do ponto, região ou espécie de peixe
 
@@ -30,7 +30,7 @@ FishSpot é um app para pescadores que exibe no mapa os melhores pontos de pesca
 | Membro | GitHub |
 | --- | --- |
 | Raian Rodrigues Guimarães | [@rainzrz](https://github.com/rainzrz) |
-| João Pedro Beilke da Costa | — |
+| João Pedro Beilke da Costa | - |
 | Everton Leonel Rodrigues dos Santos | [@Everton302Rodrigues](https://github.com/Everton302Rodrigues) |
 
 <br>
@@ -74,7 +74,7 @@ Utilizamos **GitHub Actions** com 5 jobs que rodam automaticamente em todo Pull 
 - <img src="https://api.iconify.design/lucide/paintbrush.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Validar CSS:** Stylelint verifica o `style.css`
 - <img src="https://api.iconify.design/lucide/braces.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Validar JavaScript:** ESLint verifica o `app.js`
 - <img src="https://api.iconify.design/lucide/flask-conical.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Testes Unitários:** Jest com 22 testes cobrindo filtros, busca e dados
-- <img src="https://api.iconify.design/lucide/package.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Build:** Gera o artefato em `dist/` — só roda se todos os anteriores passarem
+- <img src="https://api.iconify.design/lucide/package.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Build:** Gera o artefato em `dist/` - só roda se todos os anteriores passarem
 
 Para rodar localmente:
 
@@ -109,7 +109,7 @@ FishSpot-/
 
 | Mês | Entrega | Risco |
 | --- | --- | --- |
-| Abril | Mapa com pontos de pesca + listagem de peixes por região | Base de dados inicial pequena — mitigar cadastrando pontos manualmente |
+| Abril | Mapa com pontos de pesca + listagem de peixes por região | Base de dados inicial pequena - mitigar cadastrando pontos manualmente |
 | Maio | Comunidade: fotos, confirmações de pesca por ponto | Depende do sistema de login estar funcionando desde Abril |
 | Junho | Análise de dados, feedback de usuários, planejamento do próximo trimestre | Atrasos nos meses anteriores podem consumir esse tempo |
 
