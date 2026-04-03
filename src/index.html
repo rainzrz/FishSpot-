@@ -3,37 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FishSpot</title>
+  <title>FishSpot — Encontre os melhores pontos de pesca</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
   <!-- HEADER -->
-  <header class="header">
-    <div class="header-brand">
-      <span class="logo-icon">🎣</span>
-      <span class="logo-text">FishSpot</span>
+  <header class="header" id="appHeader">
+    <div class="header-inner">
+      <div class="header-brand">
+        <svg class="brand-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 16C4 16 8 8 16 8C20 8 23 10 25 13L28 10V18H20L23 15C21.5 12.5 19 11 16 11C10 11 7 17 7 17L4 16Z" fill="#7BBDE8"/>
+          <path d="M7 17C7 17 10 23 16 23C20 23 23 21 25 18L22 15" stroke="#BDD8E9" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="17" r="1.5" fill="#001D39"/>
+          <path d="M25 13L28 10V18L25 15" fill="#4E8EA2"/>
+        </svg>
+        <span class="brand-name">FishSpot</span>
+      </div>
+
+      <nav class="header-nav" id="headerNav">
+        <button class="nav-btn active" data-view="map">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 2C7.24 2 5 4.24 5 7c0 4.25 5 11 5 11s5-6.75 5-11c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 10 5a1.5 1.5 0 0 1 0 3.5z" fill="currentColor"/></svg>
+          Mapa
+        </button>
+        <button class="nav-btn" data-view="feed">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M2 4h16v2H2V4zm0 5h16v2H2V9zm0 5h10v2H2v-2z" fill="currentColor"/></svg>
+          Comunidade
+        </button>
+        <button class="nav-btn" data-view="profile">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8a7 7 0 0 1 14 0H3z" fill="currentColor"/></svg>
+          Perfil
+        </button>
+      </nav>
+
+      <button class="btn-login" id="btnLogin">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8a7 7 0 0 1 14 0H3z" fill="currentColor"/></svg>
+        <span id="btnLoginLabel">Entrar</span>
+      </button>
     </div>
-    <nav class="header-nav">
-      <button class="nav-btn active" data-view="map">Mapa</button>
-      <button class="nav-btn" data-view="feed">Comunidade</button>
-      <button class="nav-btn" data-view="profile">Perfil</button>
-    </nav>
-    <button class="btn-login" id="btnLogin">Entrar</button>
   </header>
 
   <!-- MAP VIEW -->
   <div id="view-map" class="view active">
     <div id="map"></div>
 
-    <!-- Search bar over map -->
     <div class="map-search">
-      <input type="text" id="searchInput" placeholder="Buscar ponto de pesca..." />
-      <button id="btnLocate">📍 Minha localização</button>
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2"/><path d="m15 15 3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" id="searchInput" placeholder="Buscar ponto, região ou espécie..." autocomplete="off" />
+      </div>
+      <button id="btnLocate" class="btn-locate" title="Minha localização">
+        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3" fill="currentColor"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
     </div>
 
-    <!-- Filter chips -->
     <div class="filter-bar">
       <button class="chip active" data-filter="all">Todos</button>
       <button class="chip" data-filter="lago">Lagos</button>
@@ -42,68 +69,147 @@
       <button class="chip" data-filter="mar">Mar</button>
     </div>
 
-    <!-- Spot card panel (hidden by default) -->
     <div id="spotPanel" class="spot-panel hidden">
-      <button class="panel-close" id="panelClose">✕</button>
+      <div class="panel-drag-handle"></div>
+      <button class="panel-close" id="panelClose" aria-label="Fechar">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5 5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
       <div id="spotContent"></div>
     </div>
   </div>
 
   <!-- FEED VIEW -->
   <div id="view-feed" class="view hidden">
-    <div class="feed-header">
-      <h2>Comunidade</h2>
-      <button class="btn-primary" id="btnNewPost">+ Nova postagem</button>
+    <div class="page-header">
+      <div class="page-header-inner">
+        <div>
+          <h1 class="page-title">Comunidade</h1>
+          <p class="page-subtitle">Relatos e confirmações dos pescadores</p>
+        </div>
+        <button class="btn-primary" id="btnNewPost">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Nova postagem
+        </button>
+      </div>
     </div>
     <div class="feed-list" id="feedList"></div>
   </div>
 
   <!-- PROFILE VIEW -->
   <div id="view-profile" class="view hidden">
-    <div class="profile-card">
-      <div class="profile-avatar">🎣</div>
-      <h2 id="profileName">Pescador Anônimo</h2>
-      <p id="profileBio">Faça login para ver seu perfil</p>
-      <div class="profile-stats">
-        <div class="stat"><span class="stat-val">0</span><span class="stat-label">Pontos visitados</span></div>
-        <div class="stat"><span class="stat-val">0</span><span class="stat-label">Confirmações</span></div>
-        <div class="stat"><span class="stat-val">0</span><span class="stat-label">Fotos</span></div>
+    <div class="profile-hero">
+      <div class="profile-hero-inner">
+        <div class="profile-avatar" id="profileAvatar">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M20 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-12 16a12 12 0 0 1 24 0H8z" fill="rgba(255,255,255,0.9)"/></svg>
+        </div>
+        <div class="profile-info">
+          <h2 class="profile-name" id="profileName">Visitante</h2>
+          <p class="profile-bio" id="profileBio">Faça login para acessar seu perfil</p>
+        </div>
+      </div>
+      <div class="profile-stats-bar">
+        <div class="stat-item">
+          <span class="stat-val" id="statVisited">0</span>
+          <span class="stat-label">Pontos visitados</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-val" id="statConfirm">0</span>
+          <span class="stat-label">Confirmações</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-val" id="statPhotos">0</span>
+          <span class="stat-label">Fotos</span>
+        </div>
       </div>
     </div>
-    <div class="profile-section">
-      <h3>Seus posts recentes</h3>
-      <div id="userPosts" class="user-posts-empty">Nenhum post ainda.</div>
+    <div class="profile-body">
+      <h3 class="section-title">Suas postagens</h3>
+      <div id="userPosts"></div>
     </div>
   </div>
 
+  <!-- FOOTER (visible in feed and profile) -->
+  <footer class="footer" id="appFooter">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg class="brand-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 16C4 16 8 8 16 8C20 8 23 10 25 13L28 10V18H20L23 15C21.5 12.5 19 11 16 11C10 11 7 17 7 17L4 16Z" fill="#4E8EA2"/>
+          <path d="M7 17C7 17 10 23 16 23C20 23 23 21 25 18L22 15" stroke="#6EA2B3" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="17" r="1.5" fill="#0A4174"/>
+          <path d="M25 13L28 10V18L25 15" fill="#49769F"/>
+        </svg>
+        <span>FishSpot</span>
+      </div>
+      <p class="footer-copy">Encontre os melhores pontos de pesca do Brasil</p>
+      <p class="footer-copy">&copy; 2026 FishSpot. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
   <!-- LOGIN MODAL -->
-  <div id="loginModal" class="modal hidden">
+  <div id="loginModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="modal-backdrop" id="loginBackdrop"></div>
     <div class="modal-box">
-      <button class="modal-close" id="modalClose">✕</button>
-      <h2>Entrar no FishSpot</h2>
-      <input type="text" id="inputName" placeholder="Seu nome" />
-      <input type="email" id="inputEmail" placeholder="E-mail" />
-      <input type="password" id="inputPass" placeholder="Senha" />
-      <button class="btn-primary full" id="btnConfirmLogin">Entrar</button>
-      <p class="modal-note">Protótipo — sem autenticação real</p>
+      <button class="modal-close" id="modalClose" aria-label="Fechar">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5 5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="modal-header">
+        <svg class="modal-logo" viewBox="0 0 32 32" fill="none"><path d="M4 16C4 16 8 8 16 8C20 8 23 10 25 13L28 10V18H20L23 15C21.5 12.5 19 11 16 11C10 11 7 17 7 17L4 16Z" fill="#0A4174"/><path d="M7 17C7 17 10 23 16 23C20 23 23 21 25 18L22 15" stroke="#4E8EA2" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <h2 id="loginTitle">Entrar no FishSpot</h2>
+        <p>Acesse a comunidade de pescadores</p>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label for="inputName">Nome</label>
+          <input type="text" id="inputName" placeholder="Seu nome completo" autocomplete="name" />
+        </div>
+        <div class="input-group">
+          <label for="inputEmail">E-mail</label>
+          <input type="email" id="inputEmail" placeholder="seu@email.com" autocomplete="email" />
+        </div>
+        <div class="input-group">
+          <label for="inputPass">Senha</label>
+          <input type="password" id="inputPass" placeholder="••••••••" autocomplete="current-password" />
+        </div>
+        <button class="btn-primary full" id="btnConfirmLogin">Entrar na plataforma</button>
+        <p class="modal-note">Protótipo — sem autenticação real</p>
+      </div>
     </div>
   </div>
 
   <!-- NEW POST MODAL -->
-  <div id="postModal" class="modal hidden">
+  <div id="postModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="postTitle">
+    <div class="modal-backdrop" id="postBackdrop"></div>
     <div class="modal-box">
-      <button class="modal-close" id="postModalClose">✕</button>
-      <h2>Nova Postagem</h2>
-      <select id="postSpot"></select>
-      <textarea id="postText" placeholder="O que está acontecendo nesse ponto? Peixes dando? Condições do local..."></textarea>
-      <label class="upload-label">
-        📷 Adicionar foto (simulado)
-        <input type="file" accept="image/*" id="postPhoto" style="display:none" />
-      </label>
-      <div class="confirm-row">
-        <label><input type="checkbox" id="postConfirm" /> Confirmar que peixe está dando neste ponto</label>
+      <button class="modal-close" id="postModalClose" aria-label="Fechar">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5 5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="modal-header">
+        <h2 id="postTitle">Nova Postagem</h2>
+        <p>Compartilhe sua experiência com a comunidade</p>
       </div>
-      <button class="btn-primary full" id="btnSubmitPost">Publicar</button>
+      <div class="modal-body">
+        <div class="input-group">
+          <label for="postSpot">Ponto de pesca</label>
+          <select id="postSpot"></select>
+        </div>
+        <div class="input-group">
+          <label for="postText">Relato</label>
+          <textarea id="postText" placeholder="O que está acontecendo neste ponto? Peixes dando? Condições do local..."></textarea>
+        </div>
+        <label class="upload-label" id="uploadLabel">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 16l4-4 3 3 4-5 5 6H4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg>
+          Adicionar foto
+          <input type="file" accept="image/*" id="postPhoto" />
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="postConfirm" />
+          <span class="checkbox-custom"></span>
+          Confirmar que o peixe está dando neste ponto
+        </label>
+        <button class="btn-primary full" id="btnSubmitPost">Publicar</button>
+      </div>
     </div>
   </div>
 
