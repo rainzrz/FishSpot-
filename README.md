@@ -75,6 +75,8 @@ git push origin feature/nome-da-feature
 
 ## <img src="https://api.iconify.design/lucide/check-circle.svg?color=%230A4174" width="24" height="24" style="vertical-align: middle;"> Pipeline de CI
 
+<img width="1506" height="378" alt="image" src="https://github.com/user-attachments/assets/9060423c-63c4-4e23-a1fe-5f9652492ca3" />
+
 Utilizamos **GitHub Actions** com 5 jobs que rodam automaticamente em todo Pull Request para `main`.
 
 - <img src="https://api.iconify.design/lucide/code.svg?color=%230A4174" width="16" height="16" style="vertical-align: middle;"> **Validar HTML:** HTMLHint verifica a estrutura do `index.html`
