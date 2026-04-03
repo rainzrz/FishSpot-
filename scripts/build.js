@@ -1,31 +1,34 @@
 /**
- * Build script — copia prototype/ para dist/
- * Injeta versão e data no HTML de saída
+ * Build script — copia src/ para dist/ mantendo estrutura
+ * Injeta metadado de versão e data no HTML de saída
  */
 const fs = require("fs");
 const path = require("path");
 
-const SRC = path.join(__dirname, "..", "prototype");
+const SRC = path.join(__dirname, "..", "src");
 const DIST = path.join(__dirname, "..", "dist");
 
-// Limpa e cria dist/
-if (fs.existsSync(DIST)) fs.rmSync(DIST, { recursive: true });
-fs.mkdirSync(DIST, { recursive: true });
+function copyDir(src, dest) {
+  if (fs.existsSync(dest)) fs.rmSync(dest, { recursive: true });
+  fs.mkdirSync(dest, { recursive: true });
 
-const files = fs.readdirSync(SRC);
-files.forEach(file => {
-  const src = path.join(SRC, file);
-  const dest = path.join(DIST, file);
-  let content = fs.readFileSync(src, "utf8");
+  fs.readdirSync(src).forEach(entry => {
+    const srcPath = path.join(src, entry);
+    const destPath = path.join(dest, entry);
 
-  // Injeta metadado de build no HTML
-  if (file.endsWith(".html")) {
-    const buildMeta = `  <meta name="build-date" content="${new Date().toISOString()}" />\n`;
-    content = content.replace("</head>", `${buildMeta}</head>`);
-  }
+    if (fs.statSync(srcPath).isDirectory()) {
+      copyDir(srcPath, destPath);
+    } else {
+      let content = fs.readFileSync(srcPath, "utf8");
+      if (entry.endsWith(".html")) {
+        const buildMeta = `  <meta name="build-date" content="${new Date().toISOString()}" />\n`;
+        content = content.replace("</head>", `${buildMeta}</head>`);
+      }
+      fs.writeFileSync(destPath, content);
+      console.log(`  ✓ ${path.relative(SRC, destPath)}`);
+    }
+  });
+}
 
-  fs.writeFileSync(dest, content);
-  console.log(`  ✓ ${file}`);
-});
-
-console.log(`\nBuild concluído → dist/ (${files.length} arquivo(s))`);
+copyDir(SRC, DIST);
+console.log(`\nBuild concluído → dist/`);
