@@ -161,7 +161,45 @@ Toda decisão arquitetural relevante deve ser registrada como ADR.
 
 ---
 
-## 7. Roadmap
+## 7. Fluxo de Contribuição (Git)
+
+### Proteção da branch `main`
+
+A branch `main` está protegida — **push direto não é permitido**. Todo código entra via Pull Request.
+
+**Regras ativas (GitHub Ruleset `protect-main`):**
+- PR obrigatório antes de fazer merge
+- Todos os jobs do CI precisam passar: Validar HTML, Validar CSS, Validar JavaScript, Testes Unitários, Build
+
+### Como contribuir
+
+```bash
+# 1. Criar uma branch para sua feature ou correção
+git checkout -b feature/nome-da-feature
+
+# 2. Fazer as alterações e commitar
+git add .
+git commit -m "feat: descrição do que fez"
+
+# 3. Subir a branch
+git push origin feature/nome-da-feature
+
+# 4. Abrir Pull Request no GitHub apontando para main
+# O CI roda automaticamente — merge só liberado com CI verde
+```
+
+### Convenção de nomes de branch
+
+| Prefixo | Quando usar |
+| --- | --- |
+| `feature/` | Nova funcionalidade |
+| `fix/` | Correção de bug |
+| `chore/` | Configuração, dependências, CI |
+| `docs/` | Documentação |
+
+---
+
+## 8. Roadmap
 
 | Mês | Entrega | Risco |
 | --- | --- | --- |
